@@ -1770,7 +1770,8 @@ ErrorCode DeltaPerformer::ValidateManifest() {
       return ErrorCode::kPayloadMismatchedType;
     }
   }
-
+  /*
+  
   if (manifest_.max_timestamp() < hardware_->GetBuildTimestamp()) {
     LOG(ERROR) << "The current OS build timestamp ("
                << hardware_->GetBuildTimestamp()
