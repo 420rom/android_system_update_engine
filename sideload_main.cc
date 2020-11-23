@@ -70,16 +70,46 @@ class SideloadDaemonState : public DaemonStateInterface,
     UpdateStatus status = update_engine_status.status;
     double progress = update_engine_status.progress;
     if (status_ != status && (status == UpdateStatus::DOWNLOADING ||
-                              status == UpdateStatus::FINALIZING)) {
+                              status == UpdateStatus::VERIFYING || status == UpdateStatus::FINALIZING)) {
       // Split the progress bar in two parts for the two stages DOWNLOADING and
       // FINALIZING.
+      ReportStatus(base::StringPrintf("ui_print ===================================="));
+      ReportStatus(base::StringPrintf("ui_print    Staging the files for 420rom     "));
+      ReportStatus(base::StringPrintf("ui_print ===================================="));
       ReportStatus(base::StringPrintf(
-          "ui_print Step %d/2", status == UpdateStatus::DOWNLOADING ? 1 : 2));
-      ReportStatus(base::StringPrintf("progress 0.5 0"));
+          "ui_print Step %d/3", status == UpdateStatus::DOWNLOADING ? 1 : 2));
+      ReportStatus(base::StringPrintf("progress 0.3 0"));
     }
-    if (status_ != status || fabs(progress - progress_) > 0.005) {
-      ReportStatus(base::StringPrintf("set_progress %.lf", progress));
-    }
+
+    if (status_ != status && (status == UpdateStatus::VERIFYING || status == UpdateStatus::FINALIZING)) {
+      // Split the progress bar in two parts for the two stages DOWNLOADING and
+      // FINALIZING.
+      ReportStatus(base::StringPrintf("ui_print "));
+      ReportStatus(base::StringPrintf("ui_print ================================================="));
+      ReportStatus(base::StringPrintf("ui_print    THANK YOU FOR FLASHING - WELCOME TO 420ROM    "));
+      ReportStatus(base::StringPrintf("ui_print ================================================="));
+      ReportStatus(base::StringPrintf("ui_print                                                  "));
+      ReportStatus(base::StringPrintf("ui_print   __ __   ___    ____                            "));
+      ReportStatus(base::StringPrintf("ui_print  / // /  |__ \  / __ \   _____  ____    ____ ___ "));
+      ReportStatus(base::StringPrintf("ui_print / // /_  __/ / / / / /  / ___/ / __ \  / __ `__ \"));
+      ReportStatus(base::StringPrintf("ui_print/__  __/ / __/ / /_/ /  / /    / /_/ / / / / / / /"));
+      ReportStatus(base::StringPrintf("ui_print  /_/   /____/ \____/  /_/     \____/ /_/ /_/ /_/ "));
+      ReportStatus(base::StringPrintf("ui_print                                                  "));
+      ReportStatus(base::StringPrintf("ui_print                                                  "));
+      ReportStatus(base::StringPrintf("ui_print        420rom 11.0 Pixel Edition Installer       "));
+      ReportStatus(base::StringPrintf("ui_print                                                  "));
+      ReportStatus(base::StringPrintf("ui_print             Android base 11.0.0 r17              "));
+      ReportStatus(base::StringPrintf("ui_print                                                  "));
+      ReportStatus(base::StringPrintf("ui_print            By ExocetDJ & Abun880007              "));
+      ReportStatus(base::StringPrintf("ui_print                                                  "));
+      ReportStatus(base::StringPrintf("ui_print         Get the Download links from our          "));
+      ReportStatus(base::StringPrintf("ui_print       Telegram Group t.me/Home_of_420roms        "));
+      ReportStatus(base::StringPrintf("ui_print                                                  "));
+
+           "ui_print Step %d/3", status == UpdateStatus::VERIFYING ? 2 : 3));
+      ReportStatus(base::StringPrintf("progress 0.6 0"));
+     }
+
     progress_ = progress;
     status_ = status;
   }
